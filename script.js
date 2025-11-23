@@ -1,131 +1,144 @@
-// ELEMENTS (all const at the top)
-
+// ==========================
+// ELEMENTS
+// ==========================
+const bookmarkIcons = document.querySelectorAll('[data-id]');
 const openSignin = document.getElementById('openSignin');
 const openLogin = document.getElementById('openLogin');
-
 const signinOverlay = document.getElementById('signinOverlay');
 const loginOverlay = document.getElementById('loginOverlay');
-
 const closeBtns = document.querySelectorAll('.closeBtn');
-
 const signInForm = document.getElementById('signInForm');
 const loginForm = document.getElementById('loginForm');
-
-const firstNameInput = document.getElementById('firstName');
-const lastNameInput = document.getElementById('lastName');
-const mobileInput = document.getElementById('mobile');
-const emailInput = document.getElementById('email');
-
-const loginEmailInput = document.getElementById('loginEmail');
-const loginPasswordInput = document.getElementById('loginPassword');
-
-const bookmarkButtons = document.querySelectorAll('.bookmarkBtn');
+const logoutBtn = document.getElementById('logoutBtn');
 
 
 
 
-// OPEN POPUPS
-
-openSignin.addEventListener('click', () => signinOverlay.style.display = 'flex');
-openLogin.addEventListener('click', () => loginOverlay.style.display = 'flex');
 
 
 
-// CLOSE BUTTONS
+
+// ==========================
+// LOGIN STATE
+// ==========================
+let userLoggedIn = localStorage.getItem("userLoggedIn") === "true";
+
+// ==========================
+// UI UPDATE FUNCTION
+// ==========================
+function updateUI() {
+  if (userLoggedIn) {
+    logoutBtn.style.display = "inline-block";
+    openSignin.style.display = "none";
+    openLogin.style.display = "none";
+  } else {
+    logoutBtn.style.display = "none";
+    openSignin.style.display = "inline-block";
+    openLogin.style.display = "inline-block";
+    // Reset bookmarks display for logged-out users
+    bookmarkIcons.forEach(icon => {
+      icon.classList.remove("saved", "bi-bookmark-fill");
+      icon.classList.add("bi-bookmark");
+    });
+  }
+}
+
+// ==========================
+// POPUPS
+// ==========================
+openSignin.addEventListener('click', () => signinOverlay.style.display = 'block');
+openLogin.addEventListener('click', () => loginOverlay.style.display = 'block');
 
 closeBtns.forEach(btn => {
   btn.addEventListener('click', () => {
-    const overlayId = btn.dataset.close;
-    document.getElementById(overlayId).style.display = 'none';
+    document.getElementById(btn.dataset.close).style.display = 'none';
   });
 });
 
-// CLOSE WHEN CLICKING OUTSIDE POPUP
-window.addEventListener('click', (e) => {
-  if (e.target.classList.contains('overlay')) {
-    e.target.style.display = 'none';
-  }
-});
-
-
-
-// SIGN IN VALIDATION
-
+// ==========================
+// SIGN IN
+// ==========================
 signInForm.addEventListener('submit', (e) => {
   e.preventDefault();
+  localStorage.setItem("userLoggedIn", "true");
+  userLoggedIn = true;
 
-  const first = firstNameInput.value.trim();
-  const last = lastNameInput.value.trim();
-  const mobile = mobileInput.value.trim();
-  const email = emailInput.value.trim();
+  alert("Account created! You can now save bookmarks.");
+  signinOverlay.style.display = "none";
 
-  if (first.length < 3 || last.length < 3) {
-    alert("First and Last name must be at least 3 characters.");
-    return;
-  }
-
-  if (!/^[0-9]{8}$/.test(mobile)) {
-    alert("Mobile must be exactly 8 digits.");
-    return;
-  }
-
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-    alert("Enter a valid email.");
-    return;
-  }
-
-  alert("Sign-In successful!");
-  signinOverlay.style.display = 'none';
-  signInForm.reset();
+  loadBookmarksState();
+  updateUI();
 });
 
-
-
-// LOGIN VALIDATION
-
+// ==========================
+// LOGIN
+// ==========================
 loginForm.addEventListener('submit', (e) => {
   e.preventDefault();
+  localStorage.setItem("userLoggedIn", "true");
+  userLoggedIn = true;
 
-  const email = loginEmailInput.value.trim();
-  const pass = loginPasswordInput.value.trim();
+  alert("Logged in successfully!");
+  loginOverlay.style.display = "none";
 
-  if (pass.length < 6) {
-    alert("Password must be at least 6 characters.");
-    return;
-  }
-
-  alert("Login successful!");
-  loginOverlay.style.display = 'none';
-  loginForm.reset();
+  loadBookmarksState();
+  updateUI();
 });
 
+// ==========================
+// LOGOUT
+// ==========================
+logoutBtn.addEventListener("click", () => {
+  localStorage.setItem("userLoggedIn", "false");
+  userLoggedIn = false;
 
+  alert("You have logged out.");
+  updateUI();
+});
 
-// bookmark or saving with the localstorage 
-const icons = document.querySelectorAll('.bookmark-icon');
+// ==========================
+// BOOKMARK SAVE/LOAD
+// ==========================
+function loadBookmarksState() {
+  if (!userLoggedIn) return;
 
-icons.forEach(icon => {
-  let id = icon.getAttribute('data-id');
+  bookmarkIcons.forEach(icon => {
+    const id = icon.getAttribute("data-id");
+    const saved = localStorage.getItem(id) === "saved";
 
-  // لو موجود في التخزين → يرجع Saved
-  if (localStorage.getItem(id) === "saved") {
-    icon.classList.add("saved");
-    icon.classList.remove("bi-bookmark");
-    icon.classList.add("bi-bookmark-fill");
-  }
+    icon.classList.toggle("saved", saved);
+    icon.classList.toggle("bi-bookmark", !saved);
+    icon.classList.toggle("bi-bookmark-fill", saved);
+  });
+}
 
-  icon.addEventListener('click', () => {
-    if (icon.classList.contains("saved")) {
-      icon.classList.remove("saved");
-      icon.classList.remove("bi-bookmark-fill");
-      icon.classList.add("bi-bookmark");
-      localStorage.removeItem(id);
-    } else {
-      icon.classList.add("saved");
-      icon.classList.remove("bi-bookmark");
-      icon.classList.add("bi-bookmark-fill");
+// Load bookmarks on page load
+loadBookmarksState();
+updateUI(); // Ensure buttons are correct on page load
+
+// ==========================
+// BOOKMARK CLICK LOGIC
+// ==========================
+bookmarkIcons.forEach(icon => {
+  const id = icon.getAttribute("data-id");
+
+  icon.addEventListener("click", () => {
+    if (!userLoggedIn) {
+      alert("Please log in first!");
+      return;
+    }
+
+    const saved = icon.classList.toggle("saved");
+    icon.classList.toggle("bi-bookmark", !saved);
+    icon.classList.toggle("bi-bookmark-fill", saved);
+
+    if (saved) {
       localStorage.setItem(id, "saved");
+    } else {
+      localStorage.removeItem(id);
     }
   });
 });
+
+
 
