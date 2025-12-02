@@ -1,6 +1,36 @@
+/* nav */
+.navbar {
+  width: 100%;
+  padding: 15px;
+  background: #0A2A66; /* Dark Blue */
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 30px;
+  border-bottom: 1px solid #ddd;
+}
+
+.nav-right button {
+  padding: 8px 16px;
+  border: none;
+  cursor: pointer;
+  background: #4CAEFF; /* Light Blue */
+  color: white;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.nav-right button:hover {
+  background: #3d97e0;
+}
+
+.card-text .bi-bookmark-fill::before {
+  content:"" !important;
+}
+
 /* popup sign in */
 .overlay {
-  display: none; /* مخفية بالبداية */
+  display: none;
   position: fixed;
   top: 0;
   left: 0;
@@ -24,7 +54,7 @@
 
 .popup h2 {
   margin-bottom: 15px;
-  color: #333;
+  color: #0A2A66;
 }
 
 .popup input {
@@ -37,7 +67,7 @@
 }
 
 .popup button[type="submit"] {
-  background-color: #007BFF;
+  background-color: #4CAEFF;
   color: white;
   padding: 10px 15px;
   border: none;
@@ -48,7 +78,7 @@
 }
 
 .popup button[type="submit"]:hover {
-  background-color: #0056b3;
+  background-color: #3d97e0;
 }
 
 .closeBtn {
@@ -62,59 +92,19 @@
   color: #666;
 }
 
-.closeBtn:hover {
-  color: #000;
-}
-
-/* تأثير الظهور */
-@keyframes fadeIn {
-  from { opacity: 0; transform: scale(0.95); }
-  to { opacity: 1; transform: scale(1); }
-}
 
 
-
-
-
-.bookmark-icon {
-  font-size: 20px;
-  cursor: pointer;
-  color: #444;
-}
-
-.bookmark-icon.saved {
-  color: #ff9800; /* كامل اللون البرتقالي */
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+/* trainer cards */
 .card-horizontal {
-  position: relative; /* ضروري للبوكمارك */
+  position: relative;
   display: flex;
   width: 500px;
-  border: 1px solid #ddd;
+  border: 1px solid #e0e0e0;
   border-radius: 10px;
   overflow: hidden;
   box-shadow: 0 2px 10px rgba(0,0,0,0.1);
   margin: 20px auto;
-  font-family: Arial, sans-serif;
+  background: white;
 }
 
 .card-horizontal img {
@@ -125,15 +115,15 @@
 
 .card-horizontal .card-content {
   padding: 15px;
-  flex: 1; 
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  flex: 1;
+  position: relative; /* مهم علشان البوك مارك يثبت فوق يمين */
 }
+
 
 .card-horizontal h3 {
   margin: 0 0 10px;
   font-size: 20px;
+  color: #0A2A66;
 }
 
 .card-horizontal p {
@@ -145,47 +135,21 @@
 .card-horizontal button {
   padding: 8px 15px;
   border: none;
-  background-color: #007BFF;
+  background-color: #4CAEFF;
   color: white;
   border-radius: 5px;
   cursor: pointer;
-  align-self: flex-end;  
+  align-self: flex-start;
 }
 
 .card-horizontal button:hover {
-  background-color: #0056b3;
-}
-
-.bookmark-icon {
-  position: absolute;
-  top: 15px;
-  right: 15px;
-  font-size: 20px;
-  cursor: pointer;
-  color: #444;
-}
-
-.bookmark-icon.saved {
-  color: #ff9800;
+  background-color: #3d97e0;
 }
 
 
-/* seach bar */
-.search-container {
-  text-align: center;
-  margin: 20px;
+
+
+.card-horizontal {
+  position: relative;
 }
 
-#searchInput {
-  width: 60%;
-  padding: 10px;
-  font-size: 16px;
-  border-radius: 20px;
-  border: 1px solid #ccc;
-  outline: none;
-}
-
-#searchInput:focus {
-  border-color: #007bff;
-  box-shadow: 0 0 5px #007bff;
-}

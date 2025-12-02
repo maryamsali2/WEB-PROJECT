@@ -1,27 +1,24 @@
 // ==========================
 // ELEMENTS
 // ==========================
-const bookmarkIcons = document.querySelectorAll('[data-id]');
-const openSignin = document.getElementById('openSignin');
-const openLogin = document.getElementById('openLogin');
-const signinOverlay = document.getElementById('signinOverlay');
-const loginOverlay = document.getElementById('loginOverlay');
-const closeBtns = document.querySelectorAll('.closeBtn');
-const signInForm = document.getElementById('signInForm');
-const loginForm = document.getElementById('loginForm');
-const logoutBtn = document.getElementById('logoutBtn');
+const openSignup = document.getElementById("openSignin");
+const openLogin = document.getElementById("openLogin");
 
+const signupOverlay = document.getElementById("signinOverlay");
+const loginOverlay = document.getElementById("loginOverlay");
 
+const closeBtns = document.querySelectorAll(".closeBtn");
 
+const signupForm = document.getElementById("signInForm");
+const loginForm = document.getElementById("loginForm");
 
-
-
-
+const logoutBtn = document.getElementById("logoutBtn");
 
 // ==========================
 // LOGIN STATE
 // ==========================
 let userLoggedIn = localStorage.getItem("userLoggedIn") === "true";
+let userSignedUp = localStorage.getItem("userSignedUp") === "true";
 
 // ==========================
 // UI UPDATE FUNCTION
@@ -29,59 +26,86 @@ let userLoggedIn = localStorage.getItem("userLoggedIn") === "true";
 function updateUI() {
   if (userLoggedIn) {
     logoutBtn.style.display = "inline-block";
-    openSignin.style.display = "none";
+    openSignup.style.display = "none";
     openLogin.style.display = "none";
   } else {
     logoutBtn.style.display = "none";
-    openSignin.style.display = "inline-block";
+    openSignup.style.display = "inline-block";
     openLogin.style.display = "inline-block";
-    // Reset bookmarks display for logged-out users
-    bookmarkIcons.forEach(icon => {
-      icon.classList.remove("saved", "bi-bookmark-fill");
-      icon.classList.add("bi-bookmark");
-    });
   }
 }
 
 // ==========================
-// POPUPS
+// OPEN POPUPS
 // ==========================
-openSignin.addEventListener('click', () => signinOverlay.style.display = 'block');
-openLogin.addEventListener('click', () => loginOverlay.style.display = 'block');
+openSignup.addEventListener("click", () => {
+  alert("If you already have an account, please LOGIN.");
+  signupOverlay.style.display = "flex";
+});
 
-closeBtns.forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.getElementById(btn.dataset.close).style.display = 'none';
+openLogin.addEventListener("click", () => {
+  loginOverlay.style.display = "flex";
+});
+
+// Close buttons
+closeBtns.forEach((btn) => {
+  btn.addEventListener("click", () => {
+    document.getElementById(btn.dataset.close).style.display = "none";
   });
 });
 
 // ==========================
-// SIGN IN
+// SIGN UP LOGIC
 // ==========================
-signInForm.addEventListener('submit', (e) => {
+signupForm.addEventListener("submit", (e) => {
   e.preventDefault();
-  localStorage.setItem("userLoggedIn", "true");
-  userLoggedIn = true;
 
-  alert("Account created! You can now save bookmarks.");
-  signinOverlay.style.display = "none";
+  const firstName = document.getElementById("firstName").value.trim();
+  const lastName = document.getElementById("lastName").value.trim();
+  const mobile = document.getElementById("mobile").value.trim();
+  const email = document.getElementById("email").value.trim();
 
-  loadBookmarksState();
+  if (firstName.length < 3) return alert("First name must be at least 3 letters.");
+  if (lastName.length < 3) return alert("Last name must be at least 3 letters.");
+  if (!/^\d{8}$/.test(mobile)) return alert("Mobile number must be exactly 8 digits.");
+
+  if (localStorage.getItem(`user_${email}`)) {
+    alert("This email is already registered. Please LOGIN.");
+    signupOverlay.style.display = "none";
+    loginOverlay.style.display = "flex";
+    return;
+  }
+
+  const userData = { firstName, lastName, mobile, email };
+  localStorage.setItem(`user_${email}`, JSON.stringify(userData));
+  localStorage.setItem("userSignedUp", "true");
+  userSignedUp = true;
+
+  alert("Account created successfully! Please LOGIN.");
+
+  signupOverlay.style.display = "none";
+  loginOverlay.style.display = "flex";
+
   updateUI();
 });
 
 // ==========================
-// LOGIN
+// LOGIN LOGIC
 // ==========================
-loginForm.addEventListener('submit', (e) => {
+loginForm.addEventListener("submit", (e) => {
   e.preventDefault();
+
+  const loginEmail = document.getElementById("loginEmail").value.trim();
+  const existingUser = localStorage.getItem(`user_${loginEmail}`);
+
+  if (!existingUser) return alert("No account found with this email. Please SIGN UP first.");
+
   localStorage.setItem("userLoggedIn", "true");
   userLoggedIn = true;
 
-  alert("Logged in successfully!");
   loginOverlay.style.display = "none";
+  alert("Logged in successfully!");
 
-  loadBookmarksState();
   updateUI();
 });
 
@@ -97,48 +121,19 @@ logoutBtn.addEventListener("click", () => {
 });
 
 // ==========================
-// BOOKMARK SAVE/LOAD
+// CLOSE POPUP ON OUTSIDE CLICK
 // ==========================
-function loadBookmarksState() {
-  if (!userLoggedIn) return;
-
-  bookmarkIcons.forEach(icon => {
-    const id = icon.getAttribute("data-id");
-    const saved = localStorage.getItem(id) === "saved";
-
-    icon.classList.toggle("saved", saved);
-    icon.classList.toggle("bi-bookmark", !saved);
-    icon.classList.toggle("bi-bookmark-fill", saved);
-  });
-}
-
-// Load bookmarks on page load
-loadBookmarksState();
-updateUI(); // Ensure buttons are correct on page load
-
-// ==========================
-// BOOKMARK CLICK LOGIC
-// ==========================
-bookmarkIcons.forEach(icon => {
-  const id = icon.getAttribute("data-id");
-
-  icon.addEventListener("click", () => {
-    if (!userLoggedIn) {
-      alert("Please log in first!");
-      return;
-    }
-
-    const saved = icon.classList.toggle("saved");
-    icon.classList.toggle("bi-bookmark", !saved);
-    icon.classList.toggle("bi-bookmark-fill", saved);
-
-    if (saved) {
-      localStorage.setItem(id, "saved");
-    } else {
-      localStorage.removeItem(id);
-    }
-  });
+window.addEventListener("click", (e) => {
+  if (e.target === signupOverlay) signupOverlay.style.display = "none";
+  if (e.target === loginOverlay) loginOverlay.style.display = "none";
 });
 
-
-
+// ==========================
+// READ MORE (GO TO DETAILS)
+// ==========================
+document.querySelectorAll(".read-more").forEach((btn) => {
+  btn.addEventListener("click", () => {
+    const trainerId = btn.dataset.id;
+    window.location.href = "details.html?id=" + trainerId;
+  });
+});
