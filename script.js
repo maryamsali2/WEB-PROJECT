@@ -1,131 +1,139 @@
-// ELEMENTS (all const at the top)
+// ==========================
+// ELEMENTS
+// ==========================
+const openSignup = document.getElementById("openSignin");
+const openLogin = document.getElementById("openLogin");
 
-const openSignin = document.getElementById('openSignin');
-const openLogin = document.getElementById('openLogin');
+const signupOverlay = document.getElementById("signinOverlay");
+const loginOverlay = document.getElementById("loginOverlay");
 
-const signinOverlay = document.getElementById('signinOverlay');
-const loginOverlay = document.getElementById('loginOverlay');
+const closeBtns = document.querySelectorAll(".closeBtn");
 
-const closeBtns = document.querySelectorAll('.closeBtn');
+const signupForm = document.getElementById("signInForm");
+const loginForm = document.getElementById("loginForm");
 
-const signInForm = document.getElementById('signInForm');
-const loginForm = document.getElementById('loginForm');
+const logoutBtn = document.getElementById("logoutBtn");
 
-const firstNameInput = document.getElementById('firstName');
-const lastNameInput = document.getElementById('lastName');
-const mobileInput = document.getElementById('mobile');
-const emailInput = document.getElementById('email');
+// ==========================
+// LOGIN STATE
+// ==========================
+let userLoggedIn = localStorage.getItem("userLoggedIn") === "true";
+let userSignedUp = localStorage.getItem("userSignedUp") === "true";
 
-const loginEmailInput = document.getElementById('loginEmail');
-const loginPasswordInput = document.getElementById('loginPassword');
+// ==========================
+// UI UPDATE FUNCTION
+// ==========================
+function updateUI() {
+  if (userLoggedIn) {
+    logoutBtn.style.display = "inline-block";
+    openSignup.style.display = "none";
+    openLogin.style.display = "none";
+  } else {
+    logoutBtn.style.display = "none";
+    openSignup.style.display = "inline-block";
+    openLogin.style.display = "inline-block";
+  }
+}
 
-const bookmarkButtons = document.querySelectorAll('.bookmarkBtn');
-
-
-
-
+// ==========================
 // OPEN POPUPS
+// ==========================
+openSignup.addEventListener("click", () => {
+  alert("If you already have an account, please LOGIN.");
+  signupOverlay.style.display = "flex";
+});
 
-openSignin.addEventListener('click', () => signinOverlay.style.display = 'flex');
-openLogin.addEventListener('click', () => loginOverlay.style.display = 'flex');
+openLogin.addEventListener("click", () => {
+  loginOverlay.style.display = "flex";
+});
 
-
-
-// CLOSE BUTTONS
-
-closeBtns.forEach(btn => {
-  btn.addEventListener('click', () => {
-    const overlayId = btn.dataset.close;
-    document.getElementById(overlayId).style.display = 'none';
+// Close buttons
+closeBtns.forEach((btn) => {
+  btn.addEventListener("click", () => {
+    document.getElementById(btn.dataset.close).style.display = "none";
   });
 });
 
-// CLOSE WHEN CLICKING OUTSIDE POPUP
-window.addEventListener('click', (e) => {
-  if (e.target.classList.contains('overlay')) {
-    e.target.style.display = 'none';
-  }
-});
-
-
-
-// SIGN IN VALIDATION
-
-signInForm.addEventListener('submit', (e) => {
+// ==========================
+// SIGN UP LOGIC
+// ==========================
+signupForm.addEventListener("submit", (e) => {
   e.preventDefault();
 
-  const first = firstNameInput.value.trim();
-  const last = lastNameInput.value.trim();
-  const mobile = mobileInput.value.trim();
-  const email = emailInput.value.trim();
+  const firstName = document.getElementById("firstName").value.trim();
+  const lastName = document.getElementById("lastName").value.trim();
+  const mobile = document.getElementById("mobile").value.trim();
+  const email = document.getElementById("email").value.trim();
 
-  if (first.length < 3 || last.length < 3) {
-    alert("First and Last name must be at least 3 characters.");
+  if (firstName.length < 3) return alert("First name must be at least 3 letters.");
+  if (lastName.length < 3) return alert("Last name must be at least 3 letters.");
+  if (!/^\d{8}$/.test(mobile)) return alert("Mobile number must be exactly 8 digits.");
+
+  if (localStorage.getItem(`user_${email}`)) {
+    alert("This email is already registered. Please LOGIN.");
+    signupOverlay.style.display = "none";
+    loginOverlay.style.display = "flex";
     return;
   }
 
-  if (!/^[0-9]{8}$/.test(mobile)) {
-    alert("Mobile must be exactly 8 digits.");
-    return;
-  }
+  const userData = { firstName, lastName, mobile, email };
+  localStorage.setItem(`user_${email}`, JSON.stringify(userData));
+  localStorage.setItem("userSignedUp", "true");
+  userSignedUp = true;
 
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-    alert("Enter a valid email.");
-    return;
-  }
+  alert("Account created successfully! Please LOGIN.");
 
-  alert("Sign-In successful!");
-  signinOverlay.style.display = 'none';
-  signInForm.reset();
+  signupOverlay.style.display = "none";
+  loginOverlay.style.display = "flex";
+
+  updateUI();
 });
 
-
-
-// LOGIN VALIDATION
-
-loginForm.addEventListener('submit', (e) => {
+// ==========================
+// LOGIN LOGIC
+// ==========================
+loginForm.addEventListener("submit", (e) => {
   e.preventDefault();
 
-  const email = loginEmailInput.value.trim();
-  const pass = loginPasswordInput.value.trim();
+  const loginEmail = document.getElementById("loginEmail").value.trim();
+  const existingUser = localStorage.getItem(`user_${loginEmail}`);
 
-  if (pass.length < 6) {
-    alert("Password must be at least 6 characters.");
-    return;
-  }
+  if (!existingUser) return alert("No account found with this email. Please SIGN UP first.");
 
-  alert("Login successful!");
-  loginOverlay.style.display = 'none';
-  loginForm.reset();
+  localStorage.setItem("userLoggedIn", "true");
+  userLoggedIn = true;
+
+  loginOverlay.style.display = "none";
+  alert("Logged in successfully!");
+
+  updateUI();
 });
 
+// ==========================
+// LOGOUT
+// ==========================
+logoutBtn.addEventListener("click", () => {
+  localStorage.setItem("userLoggedIn", "false");
+  userLoggedIn = false;
 
+  alert("You have logged out.");
+  updateUI();
+});
 
-// bookmark or saving with the localstorage 
-const icons = document.querySelectorAll('.bookmark-icon');
+// ==========================
+// CLOSE POPUP ON OUTSIDE CLICK
+// ==========================
+window.addEventListener("click", (e) => {
+  if (e.target === signupOverlay) signupOverlay.style.display = "none";
+  if (e.target === loginOverlay) loginOverlay.style.display = "none";
+});
 
-icons.forEach(icon => {
-  let id = icon.getAttribute('data-id');
-
-  // لو موجود في التخزين → يرجع Saved
-  if (localStorage.getItem(id) === "saved") {
-    icon.classList.add("saved");
-    icon.classList.remove("bi-bookmark");
-    icon.classList.add("bi-bookmark-fill");
-  }
-
-  icon.addEventListener('click', () => {
-    if (icon.classList.contains("saved")) {
-      icon.classList.remove("saved");
-      icon.classList.remove("bi-bookmark-fill");
-      icon.classList.add("bi-bookmark");
-      localStorage.removeItem(id);
-    } else {
-      icon.classList.add("saved");
-      icon.classList.remove("bi-bookmark");
-      icon.classList.add("bi-bookmark-fill");
-      localStorage.setItem(id, "saved");
-    }
+// ==========================
+// READ MORE (GO TO DETAILS)
+// ==========================
+document.querySelectorAll(".read-more").forEach((btn) => {
+  btn.addEventListener("click", () => {
+    const trainerId = btn.dataset.id;
+    window.location.href = "details.html?id=" + trainerId;
   });
 });
-
