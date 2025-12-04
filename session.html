@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Book a Session</title>
+  <link rel="stylesheet" href="./css/sessions.css">
+</head>
+
+<body>
+
+
+
+
+  <img id="teacherImg">
+<h2 id="teacherName"></h2>
+<p><strong>Grade:</strong> <span id="teacherGrade"></span></p>
+<p><strong>Phone:</strong> <span id="teacherPhone"></span></p>
+
+<label>Select Subject:</label>
+<select id="subjectSelect">
+  <option value="">-- Choose a subject --</option>
+</select>
+
+<table class="schedule-table">
+  <thead>
+    <tr>
+      <th>Day</th>
+      <th>Time</th>
+    </tr>
+  </thead>
+  <tbody id="scheduleBody"></tbody>
+</table>
+
+<input type="email" id="studentEmail" placeholder="Your email">
+
+<button id="bookBtn">Book Session</button>
+
+
+
+<div id="session-container"></div>
+
+
+
+  <script src="./js/booking.js"></script>
+</body>
+</html>

@@ -1,0 +1,221 @@
+/* ==================== NAVBAR ==================== */
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.9rem 6%;
+  background-color: #0b1b21;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.45);
+}
+
+.logo {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #e7f6fb;
+  letter-spacing: 1px;
+}
+
+.navigation ul {
+  display: flex;
+  list-style: none;
+  gap: 22px;
+}
+
+.navigation a {
+  position: relative;
+  text-decoration: none;
+  color: #c8e6f0;
+  font-size: 0.98rem;
+  padding-bottom: 4px;
+  transition: 0.25s;
+}
+
+.navigation a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 0;
+  height: 2px;
+  background-color: #4fb0c8;
+  transition: width 0.25s ease;
+}
+
+.navigation a:hover {
+  color: #ffffff;
+}
+
+.navigation a:hover::after {
+  width: 100%;
+}
+
+.navigation a.active {
+  color: #ffffff;
+}
+
+.navigation a.active::after {
+  width: 100%;
+}
+
+
+
+
+
+
+/* ====================== SEARCH BAR ====================== */
+
+.search-box {
+  position: relative;
+  width: 260px;
+  margin: 20px auto 35px;
+  transition: 0.4s ease;
+}
+
+.search-box input {
+  width: 45px;
+  height: 45px;
+  padding: 0 15px 0 45px;
+
+  border-radius: 25px;
+  border: 2px solid #4fb0c8;
+  background-color: #0f2a34;
+
+  color: #e7f6fb;
+  font-size: 0.95rem;
+
+  outline: none;
+  transition: width 0.4s ease;
+  cursor: pointer;
+}
+
+/* expand on focus */
+.search-box input:focus {
+  width: 260px;
+  cursor: text;
+}
+
+/* search icon */
+.search-box i {
+  position: absolute;
+  top: 50%;
+  left: 12px;
+  transform: translateY(-50%);
+
+  color: #4fb0c8;
+  font-size: 1.2rem;
+  pointer-events: none;
+}
+
+/* placeholder style */
+.search-box input::placeholder {
+  color: #9acbd8;
+}
+
+
+
+
+
+
+
+
+
+
+/*======== TEACHERS CARDS LAYOUT ======== */
+
+.container {
+  max-width: 1100px;
+  margin: 40px auto;
+  padding: 0 16px;
+
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+  gap: 28px;
+}
+
+/* ======== CARD STYLE ======== */
+
+.card-horizontal {
+  background: #0f2a34;
+  border: 1.5px solid #4fb0c8;
+
+  border-radius: 16px;
+  padding: 18px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+
+  box-shadow: 0 10px 25px rgba(0,0,0,0.35);
+
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  min-height: 380px; /* يجعل كل الكروت بنفس الطول */
+}
+
+/* Hover effect */
+.card-horizontal:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 35px rgba(0,0,0,0.45);
+}
+
+/* ======== IMAGE STYLING ======== */
+
+.card-horizontal img {
+  width: 160px;
+  height: 160px;
+
+  object-fit: cover;
+  border-radius: 50%;
+  border: 3px solid #4fb0c8;
+
+  margin-bottom: 14px;
+
+  box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+}
+
+/* ======== TEXT INSIDE CARD ======== */
+
+.card-content h3 {
+  color: #ffffff;
+  font-size: 1.3rem;
+  margin-bottom: 8px;
+}
+
+.card-content p {
+  color: #cdeaf3;
+  font-size: 0.9rem;
+  margin: 5px 0;
+  line-height: 1.4;
+}
+
+.card-content strong {
+  color: #74d9ef;
+}
+
+/* ======== BUTTON ======== */
+
+.book-session {
+  margin-top: 14px;
+  padding: 10px 18px;
+
+  background-color: #4fb0c8;
+  border: none;
+  border-radius: 12px;
+
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #0b1b21;
+
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.book-session:hover {
+  background-color: #6ed6eb;
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+}

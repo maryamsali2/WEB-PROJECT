@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>home page</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/home.css">
+</head>
+<body>
+    
+<header>
+  <div class="logo">Teachers Platform</div>
+
+  <nav class="navigation">
+    <ul>
+      <li><a href="home.html" class="active">Home</a></li>
+      <li><a href="totours.html" >  Teachers</a></li>
+      <li><a href="making-of.html">Making of</a></li>
+      <li><a href="our-story.html">Our Story</a></li>
+    </ul>
+  </nav>
+
+  <div class="nav-right">
+    <button id="openSignin">Sign Up</button>
+    <button id="openLogin">Login</button>
+  </div>
+</header>
+
+<hr>
+
+
+
+
+
+
+<!-- SIGN UP POPUP -->
+<div id="signinOverlay" class="overlay">
+  <div class="card">
+    <button class="closeBtn" data-close="signinOverlay">×</button>
+
+    <h2>Sign Up</h2>
+    <form id="signInForm">
+      <input type="text" id="firstName" placeholder="First Name" required>
+      <input type="text" id="lastName" placeholder="Last Name" required>
+      <input type="tel" id="mobile" placeholder="Mobile (8 digits)" required>
+      <input type="email" id="email" placeholder="Email" required>
+      <button type="submit">Sign Up</button>
+    </form>
+  </div>
+</div>
+
+<!-- LOGIN POPUP -->
+<div id="loginOverlay" class="overlay">
+  <div class="card">
+    <button class="closeBtn" data-close="loginOverlay">x</button>
+
+    <h2>Login</h2>
+
+    <form id="loginForm">
+      <input type="email" id="loginEmail" placeholder="Enter Your Email" required>
+      <button type="submit">Login</button>
+    </form>
+
+  </div>
+</div>
+
+
+
+<section class="hero">
+  <!-- النص -->
+  <div class="heroSub">
+    <h1 class="name">Welcome to Our Teachers Platform</h1>
+    <p class="title">Helping students and parents find the right teachers in Bahrain.</p>
+    <p>
+      Our platform makes it easy to explore different teachers, see their subjects and grade levels,
+      and choose the best match for each student.
+    </p>
+
+    
+  </div>
+
+  <!-- الصورة -->
+  <img
+    src="./img/teachers photo.jpg"
+    alt="Student learning from a teacher online"
+    class="heroImg"
+  >
+</section>
+
+
+<section class="overview-section">
+  
+
+  <div class="overview-grid">
+    <!-- Our Services -->
+    <article class="overview-card">
+      <h3>Our Services</h3>
+      <p>
+        We provide a clear place where students and parents can explore different teachers,
+        see the subjects they teach, their grade levels, and basic information about each one.
+        This makes it easier to choose a teacher for school support, private lessons, or extra practice at home.
+      </p>
+    </article>
+
+    <!-- How We Help You -->
+    <article class="overview-card">
+      <h3>How We Help You</h3>
+      <p>
+        Instead of searching in many different places, our website collects the important details in one page.
+        Users can quickly compare teachers and find someone who matches the student’s needs and learning style,
+        saving both time and effort for families.
+      </p>
+    </article>
+
+    <!-- How to Use the Website -->
+    <article class="overview-card">
+      <h3>How to Use the Website</h3>
+      <p>
+        First, the user browses or searches for teachers by subject or level.
+        Then they can click <strong>“Book your session”</strong> on a teacher to open the booking page.
+        On the booking page, the user chooses a subject from the dropdown and sees the available times
+        in the schedule table. Users can explore teachers without logging in, but they cannot confirm a booking
+        unless they are logged in.
+      </p>
+    </article>
+
+    <!-- Join Our Team -->
+    <article class="overview-card">
+      <h3>Join Our Team</h3>
+      <p>
+        Our platform also welcomes teachers who want to be part of the team.
+        If a teacher is interested, they can contact us and share their name, subjects, experience,
+        and contact details. After review, we can add them to the website so students and parents
+        can easily find them.
+      </p>
+    </article>
+  </div>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <script src="./js/home.js"></script>
+</body>
+</html>
