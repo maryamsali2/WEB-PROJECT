@@ -12,7 +12,7 @@ const closeBtns = document.querySelectorAll(".closeBtn");
 const signupForm = document.getElementById("signInForm");
 const loginForm = document.getElementById("loginForm");
 
-const logoutBtn = document.getElementById("logoutBtn");
+
 
 // ==========================
 // LOGIN STATE
@@ -89,6 +89,7 @@ signupForm.addEventListener("submit", (e) => {
   updateUI();
 });
 
+
 // ==========================
 // LOGIN LOGIC
 // ==========================
@@ -98,29 +99,26 @@ loginForm.addEventListener("submit", (e) => {
   const loginEmail = document.getElementById("loginEmail").value.trim();
   const existingUser = localStorage.getItem(`user_${loginEmail}`);
 
-  if (!existingUser) return alert("No account found with this email. Please SIGN UP first.");
+  if (!existingUser) 
+    return alert("No account found with this email. Please SIGN UP first.");
 
+  // Mark as logged in
   localStorage.setItem("userLoggedIn", "true");
   userLoggedIn = true;
 
+  // Extract user's first name from saved data
+  const userData = JSON.parse(existingUser);
+  const firstName = userData.firstName;
+
   loginOverlay.style.display = "none";
-  alert("Logged in successfully!");
+
+  // 🔥 NEW: Welcome message
+  alert(`Welcome, ${firstName}!`);
 
   updateUI();
 });
 
-// ==========================
-// LOGOUT
-// ==========================
-logoutBtn.addEventListener("click", () => {
-  localStorage.setItem("userLoggedIn", "false");
-  userLoggedIn = false;
 
-  alert("You have logged out.");
-  updateUI();
-});
-
-// ==========================
 // CLOSE POPUP ON OUTSIDE CLICK
 // ==========================
 window.addEventListener("click", (e) => {
@@ -128,12 +126,4 @@ window.addEventListener("click", (e) => {
   if (e.target === loginOverlay) loginOverlay.style.display = "none";
 });
 
-// ==========================
-// READ MORE (GO TO DETAILS)
-// ==========================
-document.querySelectorAll(".read-more").forEach((btn) => {
-  btn.addEventListener("click", () => {
-    const trainerId = btn.dataset.id;
-    window.location.href = "details.html?id=" + trainerId;
-  });
-});
+
