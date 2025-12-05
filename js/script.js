@@ -21,9 +21,9 @@ searchInput.addEventListener("input", function () {
     const teacherName = card.querySelector("h3").textContent.toLowerCase();
 
     if (teacherName.includes(value)) {
-      card.style.display = "flex"; // يظهر
+      card.style.display = "flex"; //shows
     } else {
-      card.style.display = "none"; // يختفي
+      card.style.display = "none"; // disappear
     }
   });
 });

@@ -12,28 +12,10 @@ const closeBtns = document.querySelectorAll(".closeBtn");
 const signupForm = document.getElementById("signInForm");
 const loginForm = document.getElementById("loginForm");
 
-
-
 // ==========================
 // LOGIN STATE
 // ==========================
 let userLoggedIn = localStorage.getItem("userLoggedIn") === "true";
-let userSignedUp = localStorage.getItem("userSignedUp") === "true";
-
-// ==========================
-// UI UPDATE FUNCTION
-// ==========================
-function updateUI() {
-  if (userLoggedIn) {
-    logoutBtn.style.display = "inline-block";
-    openSignup.style.display = "none";
-    openLogin.style.display = "none";
-  } else {
-    logoutBtn.style.display = "none";
-    openSignup.style.display = "inline-block";
-    openLogin.style.display = "inline-block";
-  }
-}
 
 // ==========================
 // OPEN POPUPS
@@ -47,17 +29,15 @@ openLogin.addEventListener("click", () => {
   loginOverlay.style.display = "flex";
 });
 
-// Close buttons
-closeBtns.forEach((btn) => {
-  btn.addEventListener("click", () => {
-    document.getElementById(btn.dataset.close).style.display = "none";
-  });
+// Close popups
+closeBtns.forEach(btn => {
+  document.getElementById(btn.dataset.close).style.display = "none";
 });
 
 // ==========================
 // SIGN UP LOGIC
 // ==========================
-signupForm.addEventListener("submit", (e) => {
+signupForm.addEventListener("submit", e => {
   e.preventDefault();
 
   const firstName = document.getElementById("firstName").value.trim();
@@ -78,52 +58,40 @@ signupForm.addEventListener("submit", (e) => {
 
   const userData = { firstName, lastName, mobile, email };
   localStorage.setItem(`user_${email}`, JSON.stringify(userData));
-  localStorage.setItem("userSignedUp", "true");
-  userSignedUp = true;
 
   alert("Account created successfully! Please LOGIN.");
 
   signupOverlay.style.display = "none";
   loginOverlay.style.display = "flex";
-
-  updateUI();
 });
-
 
 // ==========================
 // LOGIN LOGIC
 // ==========================
-loginForm.addEventListener("submit", (e) => {
+loginForm.addEventListener("submit", e => {
   e.preventDefault();
 
   const loginEmail = document.getElementById("loginEmail").value.trim();
-  const existingUser = localStorage.getItem(`user_${loginEmail}`);
+  const user = localStorage.getItem(`user_${loginEmail}`);
 
-  if (!existingUser) 
-    return alert("No account found with this email. Please SIGN UP first.");
+  if (!user) return alert("No account found. Please SIGN UP.");
 
-  // Mark as logged in
+  const userData = JSON.parse(user);
+
+  // 🟦 مهم جداً: تحديد من هو اليوزر الحالي في السيستم
+  localStorage.setItem("currentUser", loginEmail);
+
+  // 🟩 يثبت أن اليوزر مسجل دخول
   localStorage.setItem("userLoggedIn", "true");
-  userLoggedIn = true;
 
-  // Extract user's first name from saved data
-  const userData = JSON.parse(existingUser);
-  const firstName = userData.firstName;
-
+  alert(`Welcome, ${userData.firstName}!`);
   loginOverlay.style.display = "none";
-
-  // 🔥 NEW: Welcome message
-  alert(`Welcome, ${firstName}!`);
-
-  updateUI();
 });
 
-
+// ==========================
 // CLOSE POPUP ON OUTSIDE CLICK
 // ==========================
-window.addEventListener("click", (e) => {
+window.addEventListener("click", e => {
   if (e.target === signupOverlay) signupOverlay.style.display = "none";
   if (e.target === loginOverlay) loginOverlay.style.display = "none";
 });
-
-

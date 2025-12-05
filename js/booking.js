@@ -16,11 +16,11 @@ const teachers = {
 
     subjects: {
       "Arabic": [
-        { day: "Monday", times: ["4:00 PM", "6:30 PM"] },
-        { day: "Wednesday", times: ["3:00 PM", "4:30 PM"] }
+        { day: "Monday", times: ["4:00 PM"] },
+        { day: "Wednesday", times: ["3:00 PM", "5:30 PM"] }
       ],
       "Islamic Education": [
-        { day: "Saturday", times: ["10:00 AM", "12:30 PM", "4:00 PM"] }
+        { day: "Saturday", times: ["10:00 AM", "4:00 PM"] }
       ]
     }
   },
@@ -46,7 +46,7 @@ const teachers = {
 
     subjects: {
       "Musical Arts": [
-        { day: "Sunday", times: ["1:00 PM", "1:45 PM", "2:30 PM"] },
+        { day: "Sunday", times: ["1:00 PM", "2:30 PM"] },
         { day: "Tuesday", times: ["1:45 PM", "2:30 PM", "4:00 PM"] },
       ]
     }
@@ -93,10 +93,10 @@ const teachers = {
 
     subjects: {
       "Business Administration": [
-        { day: "Monday", times: ["6:00 PM", "7:00 PM"] }
+        { day: "Monday", times: ["4:00 PM", "7:00 PM"] }
       ],
       "Marketing": [
-        { day: "Thursday", times: ["6:00 PM", "6:30 PM"] }
+        { day: "Thursday", times: ["3:00 PM", "6:30 PM"] }
       ],
       "Human Resources": [
         { day: "Thursday", times: ["7:00 PM"] }
@@ -182,24 +182,34 @@ function selectTime(day, time, rowElement) {
   selectedTime = time;
 }
 
+
 // ============================
 // BOOK BUTTON
 // ============================
 bookBtn.addEventListener("click", () => {
-  const loggedIn = localStorage.getItem("userLoggedIn") === "true";
 
-  if (!loggedIn) {
-    alert("Please login first before booking.");
+  // Check login status
+  const loggedIn = localStorage.getItem("userLoggedIn");
+
+  console.log("User Logged In Value:", loggedIn);
+
+  // If NULL or FALSE → user not logged in
+  if (loggedIn !== "true") {
+    alert("⚠️ You must be logged in before booking a session.");
+
+    // OPTIONAL: redirect user to login page
+    window.location.href = "home.html"; 
     return;
   }
 
+  // Check if user selected required fields
   if (!selectedSubject || !selectedDay || !selectedTime) {
-    alert("Please select a subject, day, and time.");
+    alert("Please select a subject, day, and time before booking.");
     return;
   }
 
-  // SUCCESS MESSAGE
+  // SUCCESS
   alert(
-    ` Booking Confirmed!\n\nTeacher: ${teacher.name}\nSubject: ${selectedSubject}\nDay: ${selectedDay}\nTime: ${selectedTime}`
+    `🎉 Booking Confirmed!\n\nTeacher: ${teacher.name}\nSubject: ${selectedSubject}\nDay: ${selectedDay}\nTime: ${selectedTime}`
   );
 });

@@ -1,0 +1,169 @@
+/* ===============================
+🌐 GENERAL PAGE STYLE — LIGHT THEME
+=============================== */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Segoe UI", sans-serif;
+  background-color: #e7f6fb; /* خلفية فاتحة */
+  color: #0b1b21;
+  text-align: center;
+  padding-bottom: 60px;
+}
+
+/* ===============================
+👩‍🏫 TEACHER HEADER INFO
+=============================== */
+#teacherImg {
+  width: 150px;
+  height: 150px;
+  border-radius: 16px; /* مربع ناعم بدل دائرة */
+  object-fit: cover;
+
+  margin-top: 40px;
+  border: 3px solid #4fb0c8;
+
+  box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+}
+
+#teacherName {
+  margin-top: 15px;
+  font-size: 26px;
+  font-weight: 700;
+  color: #0b1b21;
+}
+
+p {
+  font-size: 0.95rem;
+  color: #24515f;
+}
+
+/* ===============================
+📘 SUBJECT DROPDOWN
+=============================== */
+label {
+  display: block;
+  margin-top: 25px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #24515f;
+}
+
+select {
+  width: 260px;
+  padding: 10px;
+
+  background-color: #ffffff;
+  color: #0b1b21;
+
+  border: 2px solid #4fb0c8;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  transition: 0.2s ease;
+}
+
+select:focus {
+  outline: none;
+  border-color: #6ed6eb;
+}
+
+/* ===============================
+📅 SCHEDULE TABLE — LIGHT
+=============================== */
+.schedule-table {
+  margin: 30px auto;
+  width: 85%;
+  max-width: 550px;
+
+  border-collapse: collapse;
+  background-color: #ffffff;
+  border-radius: 14px;
+  overflow: hidden;
+
+  box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+}
+
+.schedule-table th {
+  background-color: #4fb0c8;
+  color: #ffffff;
+  padding: 14px;
+  font-size: 1rem;
+}
+
+.schedule-table td {
+  padding: 12px;
+  border-bottom: 1px solid #d9eef5;
+  color: #24515f;
+}
+
+.session-row {
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.session-row:hover {
+  background-color: #e2f4fa;
+}
+
+.session-row.selected {
+  background-color: #4fb0c8;
+  color: #ffffff;
+}
+
+/* ===============================
+📧 EMAIL INPUT — LIGHT
+=============================== */
+#studentEmail {
+  margin-top: 25px;
+  padding: 12px 16px;
+  width: 260px;
+
+  background-color: #ffffff;
+  border: 2px solid #4fb0c8;
+  border-radius: 10px;
+
+  color: #0b1b21;
+  transition: 0.25s ease;
+}
+
+#studentEmail:focus {
+  outline: none;
+  border-color: #6ed6eb;
+  background-color: #f0fcff;
+}
+
+/* ===============================
+✅ BOOK BUTTON — LIGHT
+=============================== */
+#bookBtn {
+  margin-top: 25px;
+  background-color: #4fb0c8;
+  color: #ffffff;
+
+  border: none;
+  border-radius: 12px;
+
+  padding: 12px 34px;
+  font-size: 1rem;
+  font-weight: 700;
+
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+#bookBtn:hover {
+  background-color: #6ed6eb;
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+}
+
+/* ===============================
+📱 Responsive
+=============================== */
+@media (max-width: 700px) {
+  select,
+  #studentEmail,
+  #bookBtn {
+    width: 85%;
+  }
+}
