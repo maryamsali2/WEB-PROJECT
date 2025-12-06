@@ -1,3 +1,5 @@
+
+
 // ============================
 // GET TEACHER ID FROM URL
 // ============================
@@ -27,7 +29,7 @@ const teachers = {
 
   "zainab-Alsaegh": {
     name: "Zainab Alsaegh",
-    img: "./img/zainabAlsaegh.jpeg",
+    img: "./img/zainabAlsaegh.png",
     grade: "Primary School",
     phone: "+973 3922 3344",
 
@@ -51,6 +53,41 @@ const teachers = {
       ]
     }
   },
+
+
+"manar-alhalwachi": {
+  name: "Manar Alhalwachi",
+  img: "./img/manarAlhalwachi.jpeg",
+  grade: "All Levels",
+  phone: "+973 3892 7474",
+
+  subjects: {
+    "Computer Science": [
+      { day: "Sunday", times: ["3:00 PM", "7:00 PM"] },
+      { day: "Thursday", times: ["4:00 PM", "8:00 PM"] }
+    ],
+
+    "Robotics": [
+      { day: "Tuesday", times: ["5:00 PM", "8:00 PM"] }
+    ]
+  }
+},
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   "maryam-ali": {
     name: "Maryam Ali",
@@ -85,6 +122,26 @@ const teachers = {
     }
   },
 
+  "ali-abdnabi": {
+  name: "Ali Radhi Abdulnabi",
+  img: "./img/aliAbdnabi.jpeg", // ضيفي الصورة في مجلد img
+  grade: "Engineering",
+  phone: "+973 3600 0000",
+
+  subjects: {
+    "AutoCAD": [
+      { day: "Monday", times: ["4:00 PM", "6:00 PM"] },
+      { day: "Wednesday", times: ["5:00 PM"] }
+    ],
+
+    "Inventor": [
+      { day: "Sunday", times: ["3:00 PM"] },
+      { day: "Thursday", times: ["7:00 PM"] }
+    ]
+  }
+},
+
+
   "essa-abbas": {
     name: "Essa Abbas Shaheen",
     img: "./img/eissaAbbas.jpeg",
@@ -103,7 +160,15 @@ const teachers = {
       ]
     }
   }
+
+
+  
+  
 };
+
+
+
+
 
 // ============================
 // PAGE ELEMENTS
@@ -183,33 +248,55 @@ function selectTime(day, time, rowElement) {
 }
 
 
-// ============================
 // BOOK BUTTON
-// ============================
-bookBtn.addEventListener("click", () => {
 
-  // Check login status
+bookBtn.addEventListener("click", () => {
+  
   const loggedIn = localStorage.getItem("userLoggedIn");
 
-  console.log("User Logged In Value:", loggedIn);
-
-  // If NULL or FALSE → user not logged in
   if (loggedIn !== "true") {
     alert("⚠️ You must be logged in before booking a session.");
-
-    // OPTIONAL: redirect user to login page
-    window.location.href = "home.html"; 
+    window.location.href = "home.html";
     return;
   }
 
-  // Check if user selected required fields
   if (!selectedSubject || !selectedDay || !selectedTime) {
     alert("Please select a subject, day, and time before booking.");
     return;
   }
 
-  // SUCCESS
+
+  // SAVE BOOKING TO LOCAL STORAGE
+ 
+  const booking = {
+    email: localStorage.getItem("currentUser"),
+    teacher: teacher.name,
+    img: teacher.img,  
+    subject: selectedSubject,
+    day: selectedDay,
+    time: selectedTime
+  };
+
+  const all = JSON.parse(localStorage.getItem("bookings")) || [];
+  all.push(booking);
+  localStorage.setItem("bookings", JSON.stringify(all));
+
   alert(
     `🎉 Booking Confirmed!\n\nTeacher: ${teacher.name}\nSubject: ${selectedSubject}\nDay: ${selectedDay}\nTime: ${selectedTime}`
   );
+});
+
+
+// if not login show an alert and locate hime to the home and login
+bookBtn.addEventListener("click", () => {
+
+  const loggedIn = localStorage.getItem("userLoggedIn");
+
+  if (loggedIn !== "true") {
+    alert("⚠️ You must be logged in before booking.");
+    window.location.href = "home.html";
+    return;
+  }
+
+  // rest of your booking code...
 });

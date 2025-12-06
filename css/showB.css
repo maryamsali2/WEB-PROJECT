@@ -1,0 +1,106 @@
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.9rem 6%;
+  background-color: #0b1b21;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.45);
+}
+
+.logo {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #e7f6fb;
+  letter-spacing: 1px;
+}
+
+.navigation ul {
+  display: flex;
+  list-style: none;
+  gap: 22px;
+}
+
+.navigation a {
+  position: relative;
+  text-decoration: none;
+  color: #c8e6f0;
+  font-size: 0.98rem;
+  padding-bottom: 4px;
+  transition: 0.25s;
+}
+
+.navigation a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 0;
+  height: 2px;
+  background-color: #4fb0c8;
+  transition: width 0.25s ease;
+}
+
+.navigation a:hover {
+  color: #ffffff;
+}
+
+.navigation a:hover::after {
+  width: 100%;
+}
+
+.navigation a.active {
+  color: #ffffff;
+}
+
+.navigation a.active::after {
+  width: 100%;
+}
+
+.session-card {
+  background: #0f2a34;
+  border: 1px solid #4fb0c8;
+  padding: 20px;
+  border-radius: 12px;
+  margin-bottom: 16px;
+  color: white;
+}
+
+.session-card button {
+  padding: 8px 12px;
+  margin-right: 8px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.edit-btn {
+  background-color: #4fb0c8;
+  color: black;
+}
+
+.delete-btn {
+  background-color: #c84f4f;
+  color: white;
+}
+
+.delete-btn:hover {
+  background-color: #ff6b6b;
+}
+
+.edit-btn:hover {
+  background-color: #7dd1e4;
+}
+
+.teacher-photo {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 3px solid #4fb0c8;
+  display: block;
+  margin: 0 auto 15px;
+}

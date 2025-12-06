@@ -1,29 +1,29 @@
 /* ===============================
-🌐 GENERAL PAGE STYLE — LIGHT THEME
+GENERAL PAGE STYLE — WHITE BG
 =============================== */
 body {
   margin: 0;
   padding: 0;
   font-family: "Segoe UI", sans-serif;
-  background-color: #e7f6fb; /* خلفية فاتحة */
+  background-color: #ffffff; /* خلفية بيضاء */
   color: #0b1b21;
   text-align: center;
   padding-bottom: 60px;
 }
 
 /* ===============================
-👩‍🏫 TEACHER HEADER INFO
+TEACHER HEADER INFO
 =============================== */
 #teacherImg {
   width: 150px;
   height: 150px;
-  border-radius: 16px; /* مربع ناعم بدل دائرة */
+  border-radius: 18px;
   object-fit: cover;
 
   margin-top: 40px;
   border: 3px solid #4fb0c8;
 
-  box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.15);
 }
 
 #teacherName {
@@ -35,40 +35,41 @@ body {
 
 p {
   font-size: 0.95rem;
-  color: #24515f;
+  color: #3a5c68;
 }
 
 /* ===============================
-📘 SUBJECT DROPDOWN
+SUBJECT DROPDOWN
 =============================== */
 label {
   display: block;
   margin-top: 25px;
   font-size: 1rem;
   font-weight: 600;
-  color: #24515f;
+  color: #3a5c68;
 }
 
 select {
   width: 260px;
   padding: 10px;
 
-  background-color: #ffffff;
+  background-color: #f8fcff; /* فاتح جداً */
   color: #0b1b21;
 
   border: 2px solid #4fb0c8;
   border-radius: 10px;
   font-size: 0.95rem;
-  transition: 0.2s ease;
+  transition: 0.25s ease;
 }
 
 select:focus {
   outline: none;
+  background-color: #e9f9ff; /* أفتح */
   border-color: #6ed6eb;
 }
 
 /* ===============================
-📅 SCHEDULE TABLE — LIGHT
+SCHEDULE TABLE — LIGHT BLUE STYLE
 =============================== */
 .schedule-table {
   margin: 30px auto;
@@ -76,11 +77,11 @@ select:focus {
   max-width: 550px;
 
   border-collapse: collapse;
-  background-color: #ffffff;
+  background-color: #f8fcff; /* خلفية فاتحة */
   border-radius: 14px;
   overflow: hidden;
 
-  box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+  box-shadow: 0 5px 16px rgba(0,0,0,0.08);
 }
 
 .schedule-table th {
@@ -92,33 +93,34 @@ select:focus {
 
 .schedule-table td {
   padding: 12px;
-  border-bottom: 1px solid #d9eef5;
+  border-bottom: 1px solid #d7edf5;
   color: #24515f;
 }
 
 .session-row {
   cursor: pointer;
-  transition: 0.2s ease;
+  transition: 0.25s ease;
 }
 
 .session-row:hover {
-  background-color: #e2f4fa;
+  background-color: #e8f9ff; /* سماوي فاتح */
 }
 
 .session-row.selected {
-  background-color: #4fb0c8;
-  color: #ffffff;
+  background-color: #b8edff; /* تحديد بلون جميل فاتح */
+  color: #0b1b21;
+  font-weight: 600;
 }
 
 /* ===============================
-📧 EMAIL INPUT — LIGHT
+EMAIL INPUT — LIGHT
 =============================== */
 #studentEmail {
   margin-top: 25px;
   padding: 12px 16px;
   width: 260px;
 
-  background-color: #ffffff;
+  background-color: #f8fcff;
   border: 2px solid #4fb0c8;
   border-radius: 10px;
 
@@ -129,11 +131,11 @@ select:focus {
 #studentEmail:focus {
   outline: none;
   border-color: #6ed6eb;
-  background-color: #f0fcff;
+  background-color: #e9f9ff;
 }
 
 /* ===============================
-✅ BOOK BUTTON — LIGHT
+BOOK BUTTON — LIGHT BLUE STYLE
 =============================== */
 #bookBtn {
   margin-top: 25px;
@@ -154,11 +156,16 @@ select:focus {
 #bookBtn:hover {
   background-color: #6ed6eb;
   transform: translateY(-3px) scale(1.03);
-  box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+  box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+}
+
+#bookBtn {
+  display: block;        
+  margin: 50px auto 0;   
 }
 
 /* ===============================
-📱 Responsive
+Responsive
 =============================== */
 @media (max-width: 700px) {
   select,

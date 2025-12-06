@@ -12,10 +12,14 @@ const closeBtns = document.querySelectorAll(".closeBtn");
 const signupForm = document.getElementById("signInForm");
 const loginForm = document.getElementById("loginForm");
 
+const logoutBtn = document.getElementById("logoutBtn");
+
+
 // ==========================
 // LOGIN STATE
 // ==========================
 let userLoggedIn = localStorage.getItem("userLoggedIn") === "true";
+
 
 // ==========================
 // OPEN POPUPS
@@ -29,10 +33,13 @@ openLogin.addEventListener("click", () => {
   loginOverlay.style.display = "flex";
 });
 
-// Close popups
+// Close popups when X button is clicked
 closeBtns.forEach(btn => {
-  document.getElementById(btn.dataset.close).style.display = "none";
+  btn.addEventListener("click", () => {
+    document.getElementById(btn.dataset.close).style.display = "none";
+  });
 });
+
 
 // ==========================
 // SIGN UP LOGIC
@@ -45,10 +52,12 @@ signupForm.addEventListener("submit", e => {
   const mobile = document.getElementById("mobile").value.trim();
   const email = document.getElementById("email").value.trim();
 
+  // Basic validation
   if (firstName.length < 3) return alert("First name must be at least 3 letters.");
   if (lastName.length < 3) return alert("Last name must be at least 3 letters.");
   if (!/^\d{8}$/.test(mobile)) return alert("Mobile number must be exactly 8 digits.");
 
+  // Check if user already exists
   if (localStorage.getItem(`user_${email}`)) {
     alert("This email is already registered. Please LOGIN.");
     signupOverlay.style.display = "none";
@@ -56,6 +65,7 @@ signupForm.addEventListener("submit", e => {
     return;
   }
 
+  // Save new user
   const userData = { firstName, lastName, mobile, email };
   localStorage.setItem(`user_${email}`, JSON.stringify(userData));
 
@@ -64,6 +74,7 @@ signupForm.addEventListener("submit", e => {
   signupOverlay.style.display = "none";
   loginOverlay.style.display = "flex";
 });
+
 
 // ==========================
 // LOGIN LOGIC
@@ -78,15 +89,18 @@ loginForm.addEventListener("submit", e => {
 
   const userData = JSON.parse(user);
 
-  // 🟦 مهم جداً: تحديد من هو اليوزر الحالي في السيستم
+  // Save logged-in user
   localStorage.setItem("currentUser", loginEmail);
-
-  // 🟩 يثبت أن اليوزر مسجل دخول
   localStorage.setItem("userLoggedIn", "true");
 
   alert(`Welcome, ${userData.firstName}!`);
+
   loginOverlay.style.display = "none";
+
+  // Update UI to hide login and sign up buttons
+  updateUI();
 });
+
 
 // ==========================
 // CLOSE POPUP ON OUTSIDE CLICK
@@ -95,3 +109,41 @@ window.addEventListener("click", e => {
   if (e.target === signupOverlay) signupOverlay.style.display = "none";
   if (e.target === loginOverlay) loginOverlay.style.display = "none";
 });
+
+
+// ==========================
+// LOGOUT LOGIC
+// ==========================
+logoutBtn.addEventListener("click", () => {
+  localStorage.removeItem("userLoggedIn");
+  localStorage.removeItem("currentUser");
+
+  alert("You have been logged out.");
+
+  updateUI();
+  window.location.href = "home.html";
+});
+
+
+// ==========================
+// UPDATE UI BASED ON LOGIN STATE
+// ==========================
+function updateUI() {
+  const loggedIn = localStorage.getItem("userLoggedIn") === "true";
+
+  if (loggedIn) {
+    openSignup.style.display = "none";
+    openLogin.style.display = "none";
+    logoutBtn.style.display = "inline-block";
+  } else {
+    openSignup.style.display = "inline-block";
+    openLogin.style.display = "inline-block";
+    logoutBtn.style.display = "none";
+  }
+}
+
+
+// ==========================
+// RUN UI UPDATE ON PAGE LOAD
+// ==========================
+updateUI();

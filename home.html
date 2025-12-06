@@ -10,12 +10,14 @@
 <body>
     
 <header>
-  <div class="logo">Teachers Platform</div>
+  <div class="logo">EduSteps</div>
 
   <nav class="navigation">
     <ul>
       <li><a href="home.html" class="active">Home</a></li>
       <li><a href="totours.html" >  Teachers</a></li>
+      <li><a href="showB.html" >Show Bookings</a></li>
+      <li><a href="tips.html" >Study Tips</a></li>
       <li><a href="making-of.html">Making of</a></li>
       <li><a href="our-story.html">Our Story</a></li>
     </ul>
@@ -24,10 +26,12 @@
   <div class="nav-right">
     <button id="openSignin">Sign Up</button>
     <button id="openLogin">Login</button>
+    <button id="logoutBtn" style="display:none;">Logout</button>
+
   </div>
 </header>
 
-<hr>
+
 
 
 
@@ -43,7 +47,7 @@
     <form id="signInForm">
       <input type="text" id="firstName" placeholder="First Name" required>
       <input type="text" id="lastName" placeholder="Last Name" required>
-      <input type="tel" id="mobile" placeholder="Mobile (8 digits)" required>
+      <input type="tel" id="mobile" placeholder="Mobile (XXXX XXXX)" required>
       <input type="email" id="email" placeholder="Email" required>
       <button type="submit">Sign Up</button>
     </form>
@@ -70,13 +74,9 @@
 <section class="hero">
   <!-- النص -->
   <div class="heroSub">
-    <h1 class="name">Welcome to Our Teachers Platform</h1>
-    <p class="title">Helping students and parents find the right teachers in Bahrain.</p>
-    <p>
-      Our platform makes it easy to explore different teachers, see their subjects and grade levels,
-      and choose the best match for each student.
-    </p>
-
+    <h1 class="name">Welcome to EduSteps</h1>
+    <p class="title">     A learning platform that supports students from primary school to university, guiding them step-by-step to find the most suitable and trusted teachers for their academic needs.</p>
+  
     
   </div>
 
@@ -125,16 +125,7 @@
       </p>
     </article>
 
-    <!-- Join Our Team -->
-    <article class="overview-card">
-      <h3>Join Our Team</h3>
-      <p>
-        Our platform also welcomes teachers who want to be part of the team.
-        If a teacher is interested, they can contact us and share their name, subjects, experience,
-        and contact details. After review, we can add them to the website so students and parents
-        can easily find them.
-      </p>
-    </article>
+  
   </div>
 </section>
 
